@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Form</title>
+    <link rel="stylesheet" href="adani.css">
+</head>
+
+<body>
+    <form name="submit-to-google-sheet" id="form">
+        <nav class="navbar">
+            <ul id="myLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="aeo_maninagar.html">Commissioning</a></li>
+                <li><a href="vcpm.html">Vcpm</a></li>
+                <li><a href="https://www.google.com/maps/d/edit?mid=1wl3-ED1pyqQs3lRIWDYrz4nGQV6bhIs&ll=22.97570857542852%2C72.5812482626864&z=13"  target="_blank">Aeo-Maninagar_Map</a></li>
+                <li><a href="AEO-02-shiftSchedule.html">Rotostate</a></li>
+                <!-- <div class="search">
+                    <input type="text" name="search" id="search" placeholder="Search this website">
+                </div> -->
+            </ul>
+            <span class="hambar" id="nbar">
+                <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                    <i class="fa fa-bars"></i>
+                  </a>
+                <!-- <i class="fa-solid fa-bars"></i> -->
+            </span>
+        </nav>
+        <section>
+            <div class="header">
+                <h1>Commissioning</h1>
+                <hr>
+            </div>
+            <div class="container">
+                <span>
+                    <h3>Date</h3>
+                </span>
+                <input type="date" name="Date" id="date" placeholder="DD/MM/YYYY" required>
+                <span>
+                    <h3>Connection-Object Number</h3>
+                </span>
+                <input type="text" name="Connection Obj. No." placeholder="Enter C.O number" id="c.o-obj." required>
+                <span>
+                    <h3>Type of Customer</h3>
+                </span>
+                <select name="Customer Type" id="customer-type" required>
+                    <option value="Customer type wasn't defined">Customer type</option>
+                    <option value="Domestic">Domestic</option>
+                    <option value="Commercial">Commercial</option>
+                    <option value="Industrial">Industries</option>
+                </select>
+                <span>
+                    <h3>Soc. Name</h3>
+                </span>
+                <input type="text" name="Name" id="name" placeholder="Name of soc,comm & indus">
+                <span>
+                    <h3>Area</h3>
+                </span>
+                <input type="text" name="Area" id="area" placeholder="Area">
+                <span>
+                    <h3>Address</h3>
+                </span>
+                <textarea name="Address" id="address" cols="50" rows="2" placeholder="Address"></textarea>
+                <span>
+                    <h3>Regulator Size</h3><input type="text" id="reg.size" name="Regulator Size"
+                        placeholder="SE-50/25/10"><input type="number" name="Quantity" id="quantity" placeholder="Qty."
+                        required> <select name="Reg. Type" id="reg. type">
+                        <option value="reg. type wasn't defined">Select type</option>
+                        <option value="service reg.">SR</option>
+                        <option value="riser reg.">RR</option>
+                    </select>
+                    <span>
+                        <h3>Make</h3>
+                    </span>
+                    <input type="text" placeholder="make" id="make" name="make">
+                    <span>
+                        <h3>SR.No.</h3>
+                    </span>
+                    <textarea name="SR.No" id="sr.no" cols="14" rows="2" placeholder="1/2/3/...."></textarea>
+                    </button></h2>
+                    <span>
+                        <h3>ValveChamberNo.</h3>
+                    </span>
+                    <input type="text" name="VC number" placeholder="VC/MNGR/000" id="vc-no.">
+                    <span>
+                        <h3>Connectivity</h3><select name="Connectivity" id="connectiviy">
+                            <option value="Connectivity">Connectivity</option>
+                            <option value="Saddle">Saddle</option>
+                            <option value="Coupler">Coupler</option>
+                            <option value="Equal Tee">Equal Tee</option>
+                            <input type="text" name="Size" id="size" placeholder="(90x32/32)mm EqualTee">
+                        </select>
+                        <span id="lengths">
+                            <h3>PE Length:</h3><span>HP</span><input type="text" name="PE(HP)" id="hp"
+                                placeholder="00MM"><br>
+                            <span>LP</span><input type="text" name="PE(LP)" id="lp" placeholder="00MM">
+                        </span>
+                        <span>
+                            <h3>Contractor's Name</h3><input type="text" name="Contractor's Name" id="c.name"
+                                placeholder="Contractor's name">
+                                <div class="coordinates">
+                                    <input type="button" onclick="getLocation()" id="location" value="Get location"><p id="demo"></p>
+                                    <input  name="Lattitude/Longitude" placeholder="Paste above coordinates">
+                                 </div>
+                            <div class="btn"><input id="btn" type="submit" value="submit" placeholder="SUBMIT"><span id="msg"></span></div>
+            </div>
+        </section>
+    </form>
+    <script>
+        var x = document.getElementById("demo");
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                x.innerHTML = "Geolocation is not supported by this browser.";
+            }
+        }
+
+        function showPosition(position) {
+            x.innerHTML = position.coords.latitude +
+                "," + position.coords.longitude;
+        
+    }
+    </script>
+        <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbws9GgM-_JymO6juU2LWH2riJsTetRNnpdSFXqgtAhdL1wFJiyxkIy2pbxU9gIONoER5Q/exec'
+const form = document.forms['submit-to-google-sheet']
+const msg = document.getElementById('msg')
+
+form.addEventListener('submit', e => {
+   e.preventDefault()
+   fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+      .then(response => {
+         msg.innerHTML = "The data sent succesfully :)"
+         setTimeout(function () {
+            msg.innerHTML = " ";
+         }, 5000)
+         form.reset()
+      })
+      .catch(error => msg.innerHTML= "Somethin went wrong :(")
+})
+    </script>
+         <script>
+            function myFunction() {
+              var x = document.getElementById("myLinks");
+              if (x.style.display === "block") {
+                x.style.display = "none";
+              } else {
+                x.style.display = "block";
+              }
+            }
+            </script>
+</body>
+
+</html>

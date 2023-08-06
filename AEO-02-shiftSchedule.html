@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<!-- https://docs.google.com/spreadsheets/d/1kTQycVr_--MLyF6UmSZ9Y3SQmDWQQjpFyw0M-hhTN48/edit#gid=0 -->
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RotoState</title>
+    <link rel="stylesheet" href="AEO-02-shiftSchedule.css">
+</head>
+
+<body>
+    <form name="submit-to-google-sheet" class="content">
+        <!-- action="https://docs.google.com/spreadsheets/d/1kTQycVr_--MLyF6UmSZ9Y3SQmDWQQjpFyw0M-hhTN48/edit#gid=0" -->
+        <nav class="navbar">
+            <ul id="myLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="aeo_maninagar.html">Commissioning</a></li>
+                <li><a href="vcpm.html">Vcpm</a></li>
+                <li><a href="https://www.google.com/maps/d/edit?mid=1wl3-ED1pyqQs3lRIWDYrz4nGQV6bhIs&ll=22.97570857542852%2C72.5812482626864&z=13"  target="_blank">Aeo-Maninagar_Map</a></li>
+                <li><a href="AEO-02-shiftSchedule.html">Rotostate</a></li>
+            </ul>
+            <span class="hambar" id="nbar">
+                <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                    <i class="fa fa-bars"></i>
+                  </a>
+                <!-- <i class="fa-solid fa-bars"></i> -->
+            </span>
+        </nav>
+        <h2><strong id="header">RotoState</strong></h2><hr>
+        <span>
+            <label for="Aeo">Aeo-Name</label>
+            <select name="Aeo" id="Aeo">
+                <option value="aeo_maninagar" selected>aeo_maninagar</option>
+                <option value="aeo_memco">aeo_memco</option>
+                <option value="aeo-cgs">aeo-cgs</option>
+            </select>
+        </span><br>
+        <span class="date">
+            <label for="date">Date</label>
+            <input type="date" name="Date" id="date">
+        </span>
+        <span id="annoying-box">
+            <label for="dropdown">Shift
+            <select name="Shift" id="dropdown" required>
+                <option value="Shift doesn't defined">Shift</option>
+                <option value="1st Shift">A</option>
+                <option value="2nd Shift">B</option>
+                <option value="3rd Shift">C</option>
+                <option value="General Shift">G</option>
+            </select></label>
+        </span><br><hr>
+        <div class="Box">
+            <strong>SUPERVISOR</strong><br>
+            <label for="supervisor_name"></label>
+            <!-- <input type="text" placeholder="Supervisor Name" id="supervisor_name" /> -->
+            <textarea name="Supervisor"  placeholder="Supervisor Name" id="supervisor_name" ></textarea>
+            <input type="number" name="No. of Supervisor" id="quantity" placeholder="No. of Employees"  autocomplete="off">
+        </div><hr>
+        <div class="Box">
+            <strong>TECHNICIAN</strong><br>
+            <label for="Technician_name"></label>
+            <!-- <input type="text" placeholder="Technician Name" id="Technician_name" /> -->
+            <textarea name="Technician" placeholder="Technician Name" id="Technician_name"></textarea>
+            <input type="number" name="No. of Technician" id="quantity" placeholder="No. of Employees"  autocomplete="off">
+        </div><hr>
+        <div class="Box">
+            <strong>HELPER</strong><br>
+            <label for="Helper_name"></label>
+            <!-- <input type="text" placeholder="Helper Name" id="Helper_name" /> -->
+            <textarea name="Helper"  placeholder="Helper Name" id="Helper_name" ></textarea>
+            <input type="number" name="No. of Helper" id="quantity" placeholder="No. of Employees"  autocomplete="off">
+        </div><hr>
+        <div class="remark">
+            <label for="remark">Remark</label><br>
+            <textarea name="Remark" cols="25" rows="3" autocomplete="off" id="remark"></textarea>
+        </div><br>
+        <div class="button"><input id="button" type="submit" value="submit" placeholder="SUBMIT"><span id="msg"></span>
+        </div>
+    </form>
+    <script>
+        var x = document.getElementById("demo");
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                x.innerHTML = "Geolocation is not supported by this browser.";
+            }
+        }
+
+        function showPosition(position) {
+            x.innerHTML = position.coords.latitude +
+                "," + position.coords.longitude;
+
+        }
+    </script>
+    <script>
+        const scriptURL = "https://script.google.com/macros/s/AKfycbxugt-0pQuI7bQ4JbKJ-qKjOR4iZoUIScRgmCZQqXzVcqp9rS6b-LKebO6iG4z3U91S/exec";
+
+        const form = document.forms['submit-to-google-sheet']
+        const msg = document.getElementById('msg')
+
+        form.addEventListener('submit', e => {
+            e.preventDefault()
+            fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+                .then(response => {
+                    msg.innerHTML = "All data sent succesfully :)"
+                    setTimeout(function () {
+                        msg.innerHTML = " "
+                    }, 2000)
+                    form.reset()
+                })
+                .catch(error => console.error('Error!', error.message))
+        })
+    </script>
+      <script>
+        function myFunction() {
+          var x = document.getElementById("myLinks");
+          if (x.style.display === "block") {
+            x.style.display = "none";
+          } else {
+            x.style.display = "block";
+          }
+        }
+        </script>
+</body>
+
+</html>

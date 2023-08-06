@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<!-- https://docs.google.com/spreadsheets/d/1kTQycVr_--MLyF6UmSZ9Y3SQmDWQQjpFyw0M-hhTN48/edit#gid=0 -->
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <title>Maintainence</title>
+    <link rel="stylesheet" href="srpm.css">
+</head>
+
+<body>
+    <form name="submit-to-google-sheet" class="content">
+        <div class="fit">
+            <header>
+                <nav class="navbar">
+                    <ul id="myLinks">
+                        <li><a href="aeo_maninagar.html">Commissioning</a></li>
+                        <li><a href="vcpm.html">Vcpm</a></li>
+                        <li><a href="https://www.google.com/maps/d/edit?mid=1wl3-ED1pyqQs3lRIWDYrz4nGQV6bhIs&ll=22.97570857542852%2C72.5812482626864&z=13"  target="_blank">Aeo-Maninagar_Map</a></li>
+                        <li><a href="AEO-02-shiftSchedule.html">Rotostate</a></li>
+                    </ul>
+                    <span class="hambar" id="nbar">
+                        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                            <i class="fa fa-bars"></i>
+                          </a>
+                        <!-- <i class="fa-solid fa-bars"></i> -->
+                    </span>
+                </nav>
+            </header><br>
+            <h2>SRPM</h2>
+            <hr>
+            <div>
+                <h4>Date</h4>
+                <input type="date" name="Date" class="small_box" placeholder="DD/MM/YYYY">
+            </div>
+            <div class="form">
+                <!-- <div class="btn"><a href="index.html" id="form1">SRPM</a></div>
+                <div class="btn"><a href="vcpm.html" id="form2">VCPM</a></div> -->
+            </div><br>
+            <div>
+                <h4>Soc. Name</h4>
+                <input type="text" name="Society name" placeholder="Society Name" class="input_box" autocomplete="off">
+            </div><br>
+            <div class="input_box">
+                <h4>Area</h4>
+                <input type="area" placeholder="Area" class="input_box" name="Area" required autocomplete="off">
+            </div>
+            <div class="input_box">
+                <h4>SR.ID</h4>
+                <input type="area" placeholder="Sr.id" class="input_box" name="SR.ID" required autocomplete="off">
+            </div>
+
+
+        </div>
+        <div class="drop_box">
+            <h4>Foundation</h4>
+            <select name="Foundation" id="">
+                <option value="didn't choose any option">Select</option>
+                <option value="Damaged">Damaged</option>
+                <option value="Send required">Send required</option>
+                <option value="Civil Work">Civil Work</option>
+                <option value="Shifting required">Shifting required</option>
+                <option value="Hight-Up required">Hight-Up required</option>
+            </select><br>
+            <h4>Canopy</h4>
+            <select name="Canopy" id="">
+                <option value="Didn't choose any option">Select</option>
+                <option value="Light-Up">Missing</option>
+                <option value="Damaged">Corroded</option>
+                <option value="Damaged">Damaged</option>
+            </select>
+        </div><br>
+        <div class="remark">
+            <h4>Remark</h4>
+            <textarea name="Remark" cols="25" rows="3" autocomplete="off"></textarea>
+        </div><br>
+        <div class="coordinates">
+            <input type="button" onclick="getLocation()" id="location" value="Get location" autocomplete="off">
+            <p id="demo"></p>
+            <input name="Lattitude/Longitude" placeholder="Paste above coordinates" autocomplete="off">
+        </div><br>
+
+        <!-- <div class="hero">
+            <img src="/Materials/bg1.jpg" alt="DefaultImg" id="location-image">
+            <label for="input-file">Upload Image</label>
+            <input type="file"  name="Photos" accept="image/jpeg , image/png , image/jpg" id="input-file">
+
+        </div> -->
+        <div class="button"><input id="button" type="submit" value="submit" placeholder="SUBMIT"><span id="msg"></span>
+        </div>
+        </div>
+
+    </form>
+    <script>
+        var x = document.getElementById("demo");
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                x.innerHTML = "Geolocation is not supported by this browser.";
+            }
+        }
+
+        function showPosition(position) {
+            x.innerHTML = position.coords.latitude +
+                "," + position.coords.longitude;
+
+        }
+    </script>
+    <script>
+        const scriptURL = "https://script.google.com/macros/s/AKfycbx9olXn7GySHWRWsC1EFdNMYE0mXrGPZrar5XcqCKlzrjai3xps0V1efTvYhgiS7AXxaQ/exec";
+
+        const form = document.forms['submit-to-google-sheet']
+        const msg = document.getElementById('msg')
+
+        form.addEventListener('submit', e => {
+            e.preventDefault()
+            fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+                .then(response => {
+                    msg.innerHTML = "All data sent succesfully :)"
+                    setTimeout(function () {
+                        msg.innerHTML = " "
+                    }, 2000)
+                    form.reset()
+                })
+                .catch(error => console.error('Error!', error.message))
+        })
+    </script>
+    <!-- <script>
+         let inputFile = document.getElementById("input-file");
+         let locationImage = document.getElementById("location-image");
+            inputFile.onchange = function(){
+            locationImage.src = URL.createObjectURL(inputFile.files[0]) ;
+         }
+    </script> -->
+    <script>
+        function myFunction() {
+          var x = document.getElementById("myLinks");
+          if (x.style.display === "block") {
+            x.style.display = "none";
+          } else {
+            x.style.display = "block";
+          }
+        }
+        </script>
+</body>
+
+</html>

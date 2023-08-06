@@ -1,0 +1,130 @@
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maintainence</title>
+    <link rel="stylesheet" href="vcpm.css">
+</head>
+
+<body>
+    <form name="submit-to-google-sheet" class="content">
+        <nav class="navbar">
+            <ul id="myLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="aeo_maninagar.html">Commissioning</a></li>
+                <li><a href="vcpm.html">Vcpm</a></li>
+                <li><a href="https://www.google.com/maps/d/edit?mid=1wl3-ED1pyqQs3lRIWDYrz4nGQV6bhIs&ll=22.97570857542852%2C72.5812482626864&z=13"  target="_blank">Aeo-Maninagar_Map</a></li>
+                <li><a href="AEO-02-shiftSchedule.html">Rotostate</a></li>
+                <!-- <div class="search">
+                    <input type="text" name="search" id="search" placeholder="Search this website">
+                </div> -->
+            </ul>
+            <span class="hambar" id="nbar">
+                <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                    <i class="fa fa-bars"></i>
+                  </a>
+                <!-- <i class="fa-solid fa-bars"></i> -->
+            </span>
+        </nav>
+        <div class="fit">
+        <h2>VCPM</h2><hr>
+    <div><h4>Date</h4>
+        <input type="date" name="Date" class="small_box" placeholder="DD/MM/YYYY">
+    </div>
+    <div class="form">
+        <!-- <div class="btn"><a href="index.html" id="form1">SRPM</a></div>
+        <div class="btn"><a href="vcpm.html" id="form2">VCPM</a></div> -->
+    </div>
+    <div class="input_box"><h4>Soc. name</h4>
+        <input type="text" name="Society name" placeholder="Society Name" class="input_box" autocomplete="false"></div><br>
+        <div class="input_box"><h4>Area</h4>
+            <input type="area" placeholder="Area" class="input_box" name="Area" autocomplete="false">
+         </div>
+    </div>
+    <div class="fitv">
+    <div><h4>VC.ID</h4>
+        <input type="text" name="VC.ID" placeholder="VC/1234" lass="input_box"  required autocomplete="false">
+    </div>
+    
+    <div class="drop_box"><h4>Paint</h4>
+        <select name="Paint" id="">
+            <option value="didn't choose any option">Select</option>
+            <option value="paint is done">Done</option>
+            <option value="Paint is required">Required</option>
+        </select>
+    </div>
+    <div class="drop_box"><h4>Sleeper</h4>
+        <select name="Sleeper" id="">
+            <option value="didn't choose any option">Sleeper</option>
+            <option value="Round">Round</option>
+            <option value="3-nose sleeper">3-nose sleeper</option>
+            <option value="4-nose sleeper">4-nose sleeper</option>
+            <option value="Sleeper is missing">Sleeper missing</option>
+            <option value="Hook">Hook</option>
+        </select>
+    </div>
+    <div class="remark"><h4>Remark</h4>
+        <textarea name="Remark" cols="25" rows="3" autocomplete="false"></textarea>
+    </div>
+    <div><h4>Civil</h4>
+       <input type="text" name="Civil" placeholder="Civil" autocomplete="false">
+    </div>
+</div>
+    <div class="coordinates">
+        <input type="button" onclick="getLocation()" id="location" value="Get location" autocomplete="false">
+        <p id="demo"></p>
+        <input name="Lattitude/Longitude" placeholder="Paste above coordinates" autocomplete="false">
+    </div>
+    <div class="button"><input id="button" type="submit" value="submit" placeholder="SUBMIT"><span id="msg"></span></div>
+</div>
+</form>
+    <script>
+        var x = document.getElementById("demo");
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                x.innerHTML = "Geolocation is not supported by this browser.";
+            }
+        }
+
+        function showPosition(position) {
+            x.innerHTML = position.coords.latitude +
+                "," + position.coords.longitude;
+
+        }
+    </script>
+            <script>
+                const scriptURL = 'https://script.google.com/macros/s/AKfycbwb-ICn7DRU2oCt6C-Y0YB4EBVgItoW56xmR_mjPn7xFRv6ONp2LNss5JlfoEIT6grk/exec'
+                // https://script.google.com/macros/s/AKfycbzILKbfQi5GIE-HyrXBHa4mLQmmM7keqITgDbYInaS2R4z81FMQGdudXt9JHye43pmq_g/exec'
+                const form = document.forms['submit-to-google-sheet']
+                const msg = document.getElementById('msg')
+        
+                form.addEventListener('submit', e => {
+                    e.preventDefault()
+                    fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+                        .then(response => {
+                            msg.innerHTML = "All data sent succesfully :)"
+                            setTimeout(function () {
+                                msg.innerHTML = " "
+                            }, 5000)
+                            form.reset()
+                        })
+                        .catch(error => console.error('Error!', error.message))
+                })
+            </script>
+            <script>
+                function myFunction() {
+                  var x = document.getElementById("myLinks");
+                  if (x.style.display === "block") {
+                    x.style.display = "none";
+                  } else {
+                    x.style.display = "block";
+                  }
+                }
+                </script>
+   
+</body>
+
+</html>
